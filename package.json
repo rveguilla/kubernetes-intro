@@ -1,0 +1,21 @@
+{
+  "name": "exampe-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rveguilla/kubernetes-intro"
+  },
+  "author": "Ricardo Veguilla>",
+  "license": "ISC",
+  "dependencies": {
+    "any-db": "^2.2.0",
+    "any-db-mysql": "^2.1.2",
+    "bluebird": "^3.5.1",
+    "express": "^4.15.4"
+  }
+}
