@@ -1,6 +1,5 @@
 Examples projects showcasing the same example-app running on
 
-# docker (non-swarm modei, local docker host)
-# docker (swarm mode, docker-machine/virtualbox provisioned cluster)
-# kubernetes (minikube)
-# kubernetes (GCP)
+* docker-local (local docker host)
+* docker-swarm (docker swarm cluster, provisoned using docker-machine/virtualbox)
+* kubernetes-minikube (kubernetes cluster, provisones using minikube/virtualbox)
