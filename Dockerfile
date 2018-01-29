@@ -1,6 +1,6 @@
 FROM node:8
 
-COPY index.js  /usr/src/app/index.js
-COPY node_modules /usr/src/app/node_modules
 WORKDIR /usr/src/app/
+COPY node_modules /usr/src/app/node_modules
+COPY index.js  /usr/src/app/index.js
 CMD node index.js

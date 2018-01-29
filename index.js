@@ -65,7 +65,7 @@ server.get("*", (req, res) => {
       console.error(err);
       dbInitialized = false;
     })
-  res.send('Waiting for DB...').end();
+  res.json({status: 'Waiting for DB...'}).end();
   }
 });
 server.listen(serverPort, () => {

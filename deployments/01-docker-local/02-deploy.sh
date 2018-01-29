@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker-compose -f resources/example-app.yml up -d 
+docker-compose -p example -f resources/example-app.yml up -d 

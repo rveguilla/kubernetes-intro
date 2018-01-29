@@ -17,3 +17,4 @@ echo
 echo "Run this command to clear your shell environment variables:"
 echo
 echo "   eval \$(docker-machine env --unset)"
+echo "   unset DOCKER_API_VERSION"
