@@ -22,3 +22,7 @@ Example MySQL-Express-NodeJS app with deployment scripts for the following conta
 1. [minikube](https://github.com/kubernetes/minikube)
 1. curl
 1. envsubst (if not present on macOS, install 'gettext package via homebrew).
+    ``` 
+    brew install gettext
+    brew link --force gettext
+    ``` 
