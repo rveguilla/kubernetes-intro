@@ -1,6 +1,17 @@
+FROM node:8 as builder
+
+WORKDIR /build/app
+
+COPY package.json yarn.lock ./
+RUN yarn
+COPY index.js .
+RUN yarn test
+RUN yarn --prod
+RUN rm package.json yarn.lock
+
 FROM node:8
 
-WORKDIR /usr/src/app/
-COPY node_modules /usr/src/app/node_modules
-COPY index.js  /usr/src/app/index.js
+COPY --from=builder /build/app /app
+
+WORKDIR /app
 CMD node index.js
