@@ -1,15 +1,11 @@
 data "google_compute_zones" "available" {}
 
 variable "cluster_name" {
-  default = "edgars-kube-cluster"
+  default = "gcp-kube-cluster"
 }
-variable "kubernetes_version" {
-  default = "1.8.2"
-}
+
 variable "gcp_project_id" {
 }
-variable "username" {}
-variable "password" {}
 
 provider "google" {
   credentials = "${file("./resources/account.json")}"
@@ -17,22 +13,10 @@ provider "google" {
   region      = "us-central1"
 }
 
-
 resource "google_container_cluster" "primary" {
   name = "${var.cluster_name}"
   zone = "${data.google_compute_zones.available.names[0]}"
   initial_node_count = 3
-
-//  node_version = "${var.kubernetes_version}"
-
-//  additional_zones = [
-//    "${data.google_compute_zones.available.names[1]}"
-//  ]
-
-  master_auth {
-    username = "${var.username}"
-    password = "${var.password}"
-  }
 
   node_config {
     oauth_scopes = [
@@ -68,6 +52,13 @@ output "endpoint" {
 
 output "node_version" {
   value = "${google_container_cluster.primary.node_version}"
+}
+output "node_config" {
+  value = "${google_container_cluster.primary.node_config}"
+}
+
+output "node_pools" {
+  value = "${google_container_cluster.primary.node_pool}"
 }
 
 //terraform apply \
