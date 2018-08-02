@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-minikube start --cpus 4 --memory 4096 --kubernetes-version v1.9.0 --bootstrapper kubeadm
+minikube start --cpus 4 --memory 4096 --bootstrapper kubeadm
 minikube dashboard
 
 DASHBOARD_URL=$(minikube dashboard --url)
