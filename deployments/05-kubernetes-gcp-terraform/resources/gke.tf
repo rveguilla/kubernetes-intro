@@ -1,22 +1,34 @@
-data "google_compute_zones" "available" {}
 
-variable "cluster_name" {
-  default = "gcp-kube-cluster"
+terraform {
+  backend "gcs" {
+    prefix  = "terraform/state"
+  }
 }
 
-variable "gcp_project_id" {
+variable "google_compute_region"  {
+  default = "us-central1"
+}
+
+variable "google_compute_zone" {
+  default = "us-central1-a"
 }
 
 provider "google" {
-  credentials = "${file("./resources/account.json")}"
-  project     = "${var.gcp_project_id}"
-  region      = "us-central1"
+  region = "${var.google_compute_region}"
+}
+
+variable "cluster_name" {
+  default = "exampleapp-kube-cluster"
+}
+
+variable "node_count" {
+  default = "3"
 }
 
 resource "google_container_cluster" "primary" {
   name = "${var.cluster_name}"
-  zone = "${data.google_compute_zones.available.names[0]}"
-  initial_node_count = 3
+  zone = "${var.google_compute_zone}"
+  initial_node_count = "${var.node_count}"
 
   node_config {
     oauth_scopes = [
@@ -31,8 +43,6 @@ resource "google_container_cluster" "primary" {
     command = "gcloud container clusters get-credentials ${var.cluster_name} --zone ${google_container_cluster.primary.zone}"
   }
 }
-
-
 
 output "cluster_name" {
   value = "${google_container_cluster.primary.name}"
@@ -60,10 +70,3 @@ output "node_config" {
 output "node_pools" {
   value = "${google_container_cluster.primary.node_pool}"
 }
-
-//terraform apply \
-//-var 'kubernetes_version=1.6.7' \
-//-var 'cluster_name=terraform-example-cluster' \
-//-var 'region=us-west1' \
-//-var 'username=MySecretUsername' \
-//-var 'password=MySecretPassword'

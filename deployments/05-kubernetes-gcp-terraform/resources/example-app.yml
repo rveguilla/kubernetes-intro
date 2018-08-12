@@ -28,7 +28,7 @@ spec:
       spec:
           containers:
           - name: app
-            image: us.gcr.io/${DOCKER_REGISTRY_NAMESPACE}/example-app
+            image: ${CONTAINER_REGISTRY}/example-app
             env:
               - name: DB_HOST
                 value: localhost

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
+CONTAINER_REGISTRY=gcr.io/$(gcloud config get-value project)
 pushd ../..
   ./build.sh
-  docker build --tag us.gcr.io/${DOCKER_REGISTRY_NAMESPACE}/example-app .
+  docker build --tag ${CONTAINER_REGISTRY}/example-app .
 popd
