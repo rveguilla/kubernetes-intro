@@ -1,6 +1,16 @@
-FROM node:8
+FROM node:10-alpine as build
 
-WORKDIR /usr/src/app/
-COPY node_modules /usr/src/app/node_modules
-COPY index.js  /usr/src/app/index.js
+WORKDIR /build
+
+COPY package.json yarn.lock /build/
+COPY index.js /build/
+
+RUN yarn
+
+FROM node:10-alpine
+
+WORKDIR /app/
+
+COPY --from=build /build/ .
+
 CMD node index.js

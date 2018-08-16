@@ -20,3 +20,5 @@ services:
         MYSQL_PASSWORD: app_password
       expose:
         - "3306"
+      volumes:
+      - ${PWD}/../../resources/initdb/:/docker-entrypoint-initdb.d

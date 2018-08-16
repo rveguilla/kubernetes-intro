@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-app-db-lb
+spec:
+  selector:
+    app: example-app-db
+  ports:
+  - port: 3306
+    targetPort: 3306
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-app-db-deployment
+  labels:
+    app: example-app-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: example-app-db
+  template:
+      metadata:
+         labels:
+           app: example-app-db
+      spec:
+          containers:
+          - name: example-app-db
+            image: mysql:5
+            imagePullPolicy: Always
+            ports:
+            - containerPort: 3306
+            env:
+              - name: MYSQL_ROOT_PASSWORD
+                value: root_password
+              - name: MYSQL_DATABASE
+                value: app_database
+              - name: MYSQL_USER
+                value: app_user
+              - name: MYSQL_PASSWORD
+                value: app_password
+            volumeMounts:
+            - name: initdb-configmap
+              mountPath: /docker-entrypoint-initdb.d
+          volumes:
+          - name: initdb-configmap
+            configMap:
+              name: db-init-sql

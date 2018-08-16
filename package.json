@@ -13,9 +13,8 @@
   "author": "Ricardo Veguilla>",
   "license": "ISC",
   "dependencies": {
-    "any-db": "^2.2.0",
-    "any-db-mysql": "^2.1.2",
     "bluebird": "^3.5.1",
-    "express": "^4.15.4"
+    "express": "^4.15.4",
+    "promise-mysql": "^3.3.1"
   }
 }
