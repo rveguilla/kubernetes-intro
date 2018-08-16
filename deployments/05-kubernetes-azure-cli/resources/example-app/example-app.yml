@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,11 +7,11 @@ spec:
   selector:
     app: example-app
   ports:
-    - port: 3000
+    - port: 80
       targetPort: 3000
   type: LoadBalancer
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: example-app-deployment
@@ -22,22 +23,24 @@ spec:
     matchLabels:
       app: example-app
   template:
-      metadata:
-         labels:
-           app: example-app
-      spec:
-          containers:
-          - name: app
-            image: example-app
-            imagePullPolicy: Never
-            env:
-              - name: DB_HOST
-                value: example-app-db-lb
-              - name: DB_USER
-                value: app_user
-              - name: DB_PASSWORD
-                value: app_password
-              - name: DB_DRIVER
-                value: mysql
-            ports:
-            - containerPort: 3000
+    metadata:
+      labels:
+        app: example-app
+    spec:
+      containers:
+      - name: app
+        image: ${CONTAINER_REGISTRY}/example-app
+        imagePullPolicy: Always
+        env:
+        - name: DB_HOST
+          value: example-app-db
+        - name: DB_USER
+          value: app_user
+        - name: DB_PASSWORD
+          value: app_password
+        - name: DB_DRIVER
+          value: mysql
+        ports:
+        - containerPort: 3000
+      imagePullSecrets:
+      - name: acr-auth

@@ -13,13 +13,13 @@ ACR_REGISTRY_ID=$(az acr show --query id --output tsv)
 ACR_READER_SP=ExampleAppRegistryReaderPrincipal
 ACR_WRITER_SP=ExampleAppRegistryContributorPrincipal
 
-ACR_WRITER_SP_RESOURCE=$(az ad sp create-for-rbac --name $ACR_WRITER_SP --role Contributor --scopes $ACR_REGISTRY_ID)
+ACR_WRITER_SP_RESOURCE=$(az ad sp create-for-rbac --name ${ACR_WRITER_SP} --role Contributor --scopes ${ACR_REGISTRY_ID})
 ACR_WRITER_USERNAME=$(echo ${ACR_WRITER_SP_RESOURCE} | jq -r '.appId')
 ACR_WRITER_PASSWORD=$(echo ${ACR_WRITER_SP_RESOURCE} | jq -r '.password')
 echo ${ACR_WRITER_SP_RESOURCE}
 az acr login --username ${ACR_WRITER_USERNAME} --password ${ACR_WRITER_PASSWORD}
 
-ACR_READER_SP_RESOURCE=$(az ad sp create-for-rbac --name $ACR_READER_SP --role Reader --scopes $ACR_REGISTRY_ID)
+ACR_READER_SP_RESOURCE=$(az ad sp create-for-rbac --name ${ACR_READER_SP} --role Reader --scopes ${ACR_REGISTRY_ID})
 ACR_READER_USERNAME=$(echo ${ACR_READER_SP_RESOURCE} | jq -r '.appId')
 ACR_READER_PASSWORD=$(echo ${ACR_READER_SP_RESOURCE} | jq -r '.password')
 ACR_READER_EMAIL="ExampleAppRegistryReaderPrincipal@ExampleAppRegistry1Principal.net"
