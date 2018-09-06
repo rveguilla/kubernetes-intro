@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-minikube start --cpus 4 --memory 4096 --bootstrapper kubeadm
+MINIKUBE_DRIVER=${MINIKUBE_DRIVER:-virtualbox}
+minikube start --cpus 4 --memory 4096 --vm-driver ${MINIKUBE_DRIVER}
 minikube addons enable ingress
 
 
