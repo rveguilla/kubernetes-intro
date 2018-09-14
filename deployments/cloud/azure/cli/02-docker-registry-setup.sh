@@ -2,26 +2,23 @@
 set -e
 
 RESOURCE_GROUP=${RESOURCE_GROUP:-ExampleAppResourceGroup}
+KUBE_CLUSTER_NAME=${KUBE_CLUSTER_NAME:-ExampleAppKubeCluster}
 ACR_NAME=${ACR_NAME:-ExampleAppRegistry1}
 
 az acr create --name ${ACR_NAME} --sku Basic
 az configure --defaults acr=${ACR_NAME}
 
-CONTAINER_REGISTRY=$(az acr show --query loginServer --output tsv)
 ACR_REGISTRY_ID=$(az acr show --query id --output tsv)
 
-ACR_READER_SP=ExampleAppRegistryReaderPrincipal
+# Get the id of the service principal configured for AKS
+CLIENT_ID=$(az aks show --name ${KUBE_CLUSTER_NAME} --query "servicePrincipalProfile.clientId" --output tsv)
 
-ACR_READER_SP_RESOURCE=$(az ad sp create-for-rbac --name ${ACR_READER_SP} --role Reader --scopes ${ACR_REGISTRY_ID})
-ACR_READER_USERNAME=$(echo ${ACR_READER_SP_RESOURCE} | jq -r '.appId')
-ACR_READER_PASSWORD=$(echo ${ACR_READER_SP_RESOURCE} | jq -r '.password')
-ACR_READER_EMAIL="ExampleAppRegistryReaderPrincipal@ExampleAppRegistry1Principal.net"
-echo ${ACR_READER_SP_RESOURCE}
+# Reset default to work around bug in assignment
+az configure --defaults group=''
+
+# Create role assignment
+az role assignment create --assignee ${CLIENT_ID} --role Reader --scope ${ACR_REGISTRY_ID}
+
+az configure --defaults group=${RESOURCE_GROUP}
 
 az acr login
-
-kubectl create secret docker-registry acr-auth \
-                --docker-username=${ACR_READER_USERNAME} \
-                --docker-password=${ACR_READER_PASSWORD} \
-                --docker-email="${ACR_READER_EMAIL}" \
-                --docker-server=${CONTAINER_REGISTRY}

@@ -10,3 +10,5 @@ echo
 echo "Run this command to configure your shell:"
 echo
 echo "   eval \$(minikube docker-env)"
+
+kubectl config use-context minikube
