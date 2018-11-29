@@ -8,7 +8,8 @@ Example MySQL-Express-NodeJS app with deployment scripts for the following conta
 1. Local Kubernetes cluster provisioned using Docker for Mac Kubernetes support.
 1. Google Kubernetes Engine (GKE) cluster, provisioned using Google Cloud SDK (cli).
 1. Google Kubernetes Engine (GKE) cluster, provisioned using Terraform.
-1. Azure Kubernetes Engine (AKS) cluster, provisioned using Azure SDK (cli).
+1. Azure Kubernetes Engine (AKS) cluster, provisioned using Azure CLI.
+1. Amazon Elastic Container Service for Kubernetes (EKS) cluster, provisioned using AWS CLI.
 
 
 ## Requirements:
