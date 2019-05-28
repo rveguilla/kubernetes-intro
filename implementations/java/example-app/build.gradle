@@ -1,0 +1,26 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.5.RELEASE'
+	id 'groovy'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'example.app'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'mysql:mysql-connector-java'
+	implementation 'org.codehaus.groovy:groovy'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+bootJar {
+	archiveFileName = "app.jar"
+}

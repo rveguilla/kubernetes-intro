@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-app-db
+  labels:
+    app: example-app-db
+spec:
+  selector:
+    app: example-app-db
+  ports:
+    - name: example-app-db-port
+      port: 3306
+      targetPort: 3306

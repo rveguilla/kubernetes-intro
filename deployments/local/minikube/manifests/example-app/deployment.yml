@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-app
+  labels:
+    app: example-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: example-app
+  template:
+    metadata:
+      labels:
+        app: example-app
+    spec:
+      containers:
+        - name: example-app
+          image: ${IMAGE}
+          imagePullPolicy: Always
+          env:
+            - name: DB_HOST
+              value: example-app-db
+            - name: DB_NAME
+              value: app_database
+            - name: DB_USER
+              value: app_user
+            - name: DB_PASSWORD
+              value: app_password
+          ports:
+            - name: app-port
+              containerPort: ${PORT}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: app-port

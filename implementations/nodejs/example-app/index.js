@@ -9,8 +9,7 @@ const connPool = mysql.createPool({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'app_user',
     password: process.env.DB_PASSWORD || 'app_password',
-    database: process.env.DB_NAME || 'app_database',
-    connectionLimit : 5
+    database: process.env.DB_NAME || 'app_database'
 });
 
 server.get("*",  async (req, res) => {

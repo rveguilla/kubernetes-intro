@@ -3,9 +3,9 @@ FROM node:10-alpine as build
 WORKDIR /build
 
 COPY package.json yarn.lock /build/
-COPY index.js /build/
-
 RUN yarn
+
+COPY index.js /build/
 
 FROM node:10-alpine
 

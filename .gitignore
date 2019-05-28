@@ -5,3 +5,5 @@ account.json
 .idea/
 output
 .terraform
+.gradle
+build

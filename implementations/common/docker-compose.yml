@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  db:
+      image: mysql:5
+      environment:
+        MYSQL_ROOT_PASSWORD: root_password
+        MYSQL_DATABASE: app_database
+        MYSQL_USER:  app_user
+        MYSQL_PASSWORD: app_password
+      ports:
+        - "3306:3306"
+      volumes:
+      - ${PWD}/initdb/:/docker-entrypoint-initdb.d
+
+
+  app:
+    image: rveguilla/example-app-java
+    environment:
+      DB_HOST: db
+      DB_USER: app_user
+      DB_PASSWORD: app_password
+      DB_NAME: app_database
+    ports:
+      - "8080:8080"
